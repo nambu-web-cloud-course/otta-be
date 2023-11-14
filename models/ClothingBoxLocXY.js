@@ -8,23 +8,23 @@ class ClothingBoxLocXY extends Sequelize.Model {
           type: Sequelize.UUID,
           primaryKey: true,
           allowNull: false,
+          unique: true,
         },
         x: {
-          type: Sequelize.INTEGER(1),
+          type: Sequelize.STRING(250),
           allowNull: false,
         },
         y: {
-          type: Sequelize.INTEGER(10),
+          type: Sequelize.STRING(250),
           allowNull: false,
         },
       },
       {
         sequelize,
-        timestamps: true,
+        timestamps: false,
         underscored: true,
         modelName: 'ClothingBoxLocXY',
         tableName: 'ClothingBoxLocXY',
-        paranoid: true,
         charset: 'utf8',
         collate: 'utf8_general_ci',
       }
@@ -33,7 +33,6 @@ class ClothingBoxLocXY extends Sequelize.Model {
   static associate(db) {
     db.ClothingBoxLocXY.belongsTo(db.ClothingBoxLoc, {
       foreignKey: 'id',
-      // sourceKey: id,
     });
   }
 }

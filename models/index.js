@@ -11,36 +11,47 @@ let sequelize = new Sequelize(
 );
 db.sequelize = sequelize;
 
-const User = require('./User.js');
-const Post = require('./Post.js');
-const PostImage = require('./PostImage.js');
-const Comment = require('./Comment.js');
-const Alert = require('./Alert.js');
-const ClothingBoxLoc = require('./ClothingBoxLoc.js');
-const ClothingBoxLocXY = require('./ClothingBoxLocXY.js');
+const setMainData = () => {
+  const User = require('./User.js');
+  const Post = require('./Post.js');
+  const PostImage = require('./PostImage.js');
+  const Comment = require('./Comment.js');
+  const Alert = require('./Alert.js');
 
-db.User = User;
-db.Post = Post;
-db.PostImage = PostImage;
-db.Comment = Comment;
-db.Alert = Alert;
-db.ClothingBoxLoc = ClothingBoxLoc;
-db.ClothingBoxLocXY = ClothingBoxLocXY;
+  db.User = User;
+  db.Post = Post;
+  db.PostImage = PostImage;
+  db.Comment = Comment;
+  db.Alert = Alert;
 
-User.init(sequelize);
-Post.init(sequelize);
-PostImage.init(sequelize);
-Comment.init(sequelize);
-Alert.init(sequelize);
-ClothingBoxLoc.init(sequelize);
-ClothingBoxLocXY.init(sequelize);
+  User.init(sequelize);
+  Post.init(sequelize);
+  PostImage.init(sequelize);
+  Comment.init(sequelize);
+  Alert.init(sequelize);
 
-User.associate(db);
-Post.associate(db);
-PostImage.associate(db);
-Comment.associate(db);
-Alert.associate(db);
-ClothingBoxLoc.associate(db);
-ClothingBoxLocXY.associate(db);
+  User.associate(db);
+  Post.associate(db);
+  PostImage.associate(db);
+  Comment.associate(db);
+  Alert.associate(db);
+};
+
+const setClothingBoxData = () => {
+  const ClothingBoxLoc = require('./ClothingBoxLoc.js');
+  const ClothingBoxLocXY = require('./ClothingBoxLocXY.js');
+
+  db.ClothingBoxLoc = ClothingBoxLoc;
+  db.ClothingBoxLocXY = ClothingBoxLocXY;
+
+  ClothingBoxLoc.init(sequelize);
+  ClothingBoxLocXY.init(sequelize);
+
+  ClothingBoxLoc.associate(db);
+  ClothingBoxLocXY.associate(db);
+};
+
+setMainData()
+setClothingBoxData();
 
 module.exports = db;
