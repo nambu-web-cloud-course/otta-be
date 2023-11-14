@@ -2,7 +2,7 @@
   "name": "otta-be",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "App.js",
   "scripts": {
     "start": "npm nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,5 +20,11 @@
     "mysql2": "^3.6.3",
     "sequelize": "^6.35.0",
     "sequelize-cli": "^6.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.1.0"
   }
 }
