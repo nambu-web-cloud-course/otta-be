@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-class ClothingBoxLoc extends Sequelize.Model {
+class ClothingBoxLocation extends Sequelize.Model {
 	static init(sequelize) {
 		return super.init(
 			{
@@ -10,12 +10,20 @@ class ClothingBoxLoc extends Sequelize.Model {
 					allowNull: false,
 					unique: true,
 				},
-				box_addr: {
+				address: {
 					type: Sequelize.STRING(50),
 					allowNull: false,
 				},
-				loc_code: {
+				region: {
 					type: Sequelize.STRING(10),
+					allowNull: false,
+				},
+				x: {
+					type: Sequelize.STRING(20),
+					allowNull: false,
+				},
+				y: {
+					type: Sequelize.STRING(20),
 					allowNull: false,
 				},
 			},
@@ -23,18 +31,14 @@ class ClothingBoxLoc extends Sequelize.Model {
 				sequelize,
 				timestamps: false,
 				underscored: true,
-				modelName: 'ClothingBoxLoc',
-				tableName: 'ClothingBoxLoc',
+				modelName: 'ClothingBoxLocation',
+				tableName: 'ClothingBoxLocation',
 				charset: 'utf8',
 				collate: 'utf8_general_ci',
 			}
 		);
 	}
-	static associate(db) {
-		db.ClothingBoxLoc.hasOne(db.ClothingBoxLocXY, {
-			foreignKey: 'id',
-		});
-	}
+	
 }
 
-module.exports = ClothingBoxLoc;
+module.exports = ClothingBoxLocation;

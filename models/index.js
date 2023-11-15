@@ -38,17 +38,11 @@ const setMainData = () => {
 };
 
 const setClothingBoxData = () => {
-	const ClothingBoxLoc = require('./ClothingBoxLoc.js');
-	const ClothingBoxLocXY = require('./ClothingBoxLocXY.js');
+	const ClothingBoxLocation = require('./ClothingBoxLocation.js');
 
-	db.ClothingBoxLoc = ClothingBoxLoc;
-	db.ClothingBoxLocXY = ClothingBoxLocXY;
+	db.ClothingBoxLocation = ClothingBoxLocation;
 
-	ClothingBoxLoc.init(sequelize);
-	ClothingBoxLocXY.init(sequelize);
-
-	ClothingBoxLoc.associate(db);
-	ClothingBoxLocXY.associate(db);
+	ClothingBoxLocation.init(sequelize);
 };
 
 setMainData();
