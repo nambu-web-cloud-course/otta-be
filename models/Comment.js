@@ -53,12 +53,12 @@ class Comment extends Sequelize.Model {
 				paranoid: true,
 				charset: 'utf8',
 				collate: 'utf8_general_ci',
-			}
+			},
 		);
 	}
 	static associate(db) {
-		db.Comment.belongsTo(db.Post, { foreignKey: 'id' });
-		db.Comment.belongsTo(db.User, { foreignKey: 'id' });
+		db.Comment.belongsTo(db.Post, { foreignKey: 'post_id', targetKey: 'id' });
+		db.Comment.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id' });
 		db.Comment.hasOne(db.Alert);
 	}
 }
