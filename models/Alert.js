@@ -41,13 +41,13 @@ class Alert extends Sequelize.Model {
 				paranoid: true,
 				charset: 'utf8',
 				collate: 'utf8_general_ci',
-			}
+			},
 		);
 	}
 	static associate(db) {
-		db.Alert.belongsTo(db.User, { foreignKey: 'id' });
-		db.Alert.belongsTo(db.Post, { foreignKey: 'id' });
-		db.Alert.belongsTo(db.Comment, { foreignKey: 'id' });
+		db.Alert.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id' });
+		db.Alert.belongsTo(db.Post, { foreignKey: 'post_id', targetKey: 'id' });
+		db.Alert.belongsTo(db.Comment, { foreignKey: 'comment_id', targetKey: 'id' });
 	}
 }
 

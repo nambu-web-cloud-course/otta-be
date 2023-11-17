@@ -37,11 +37,11 @@ class Post extends Sequelize.Model {
 				paranoid: true,
 				charset: 'utf8',
 				collate: 'utf8_general_ci',
-			}
+			},
 		);
 	}
 	static associate(db) {
-		db.Post.belongsTo(db.User, { foreignKey: 'id' });
+		db.Post.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id' });
 		db.Post.hasMany(db.Comment);
 		db.Post.hasMany(db.PostImage);
 		db.Post.hasMany(db.Alert);
