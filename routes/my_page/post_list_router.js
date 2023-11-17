@@ -74,7 +74,7 @@ const generateMockData = (n, post_id) => {
 
 router.get('/comment-list', async (req, res) => {
 	//TODO: authorization
-	req.user_id = '1';
+	req.user_id = 1;
 
 	const { post_id } = req.query;
 
@@ -132,7 +132,7 @@ router.get('/comment-list', async (req, res) => {
 
 router.put('/check', async (req, res) => {
 	//TODO: authorization
-	req.user_id = '1';
+	req.user_id = 1;
 
 	const { comment_id } = req.query;
 
