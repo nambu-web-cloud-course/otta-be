@@ -59,7 +59,7 @@ const generateMockData = (n, post_id) => {
 			title: '저에게 꼭 필요한 수건이에요',
 			user_id: i + 5,
 			user_nick_name: `Tony ${i + 5}`,
-			created_at: '2023-11-15 16:41:10',
+			createdAt: '2023-11-15 16:41:10',
 			content:
 				'저에게 코트를 주세요 제발요~!  저에게 코트를 주세요 제발요~! 저에게 코트를 주세요 제발요~! ',
 			phone: '01012345678',
