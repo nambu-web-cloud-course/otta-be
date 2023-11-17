@@ -21,10 +21,10 @@ const test = {
 };
 
 const production = {
-	username: env.MYSQL_DEV_USERNAME,
-	password: env.MYSQL_DEV_PASSWORD,
-	database: env.MYSQL_DEV_DATABASE,
-	host: env.MYSQL_DEV_HOST,
+	username: env.MYSQL_USERNAME,
+	password: env.MYSQL_PASSWORD,
+	database: env.MYSQL_DATABASE,
+	host: env.MYSQL_HOST,
 	port: 3306,
 	dialect: 'mysql',
 };
