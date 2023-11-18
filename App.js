@@ -22,6 +22,8 @@ const nanum_post_detail_router = require('./routes/nanum/nanum_post_detail_route
 const nanum_list_comment_router = require('./routes/nanum/nanum_list_comment_router.js');
 const auth_router = require('./routes/auth/auth_router.js');
 
+
+// middleware
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,6 +40,11 @@ app.use('/nanum/post/detail', nanum_post_detail_router);
 app.use('/nanum/list/comment', nanum_list_comment_router);
 app.use('/auth', auth_router);
 
+
+
+
+
 app.listen(port, () => {
 	console.log('Express server listening on port ' + port);
 });
+
