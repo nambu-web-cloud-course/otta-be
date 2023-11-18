@@ -33,11 +33,11 @@ class PostImage extends Sequelize.Model {
 				paranoid: true,
 				charset: 'utf8',
 				collate: 'utf8_general_ci',
-			}
+			},
 		);
 	}
 	static associate(db) {
-		db.PostImage.belongsTo(db.Post, { foreignKey: 'id' });
+		db.PostImage.belongsTo(db.Post, { foreignKey: 'post_id', targetKey: 'id' });
 	}
 }
 
