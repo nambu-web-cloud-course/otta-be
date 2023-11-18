@@ -25,7 +25,7 @@ const generateMockData = n => {
 
 router.get('/', async (req, res) => {
 	//TODO: authorization
-	req.user_id = '1';
+	req.user_id = 1;
 
 	let result = [];
 
