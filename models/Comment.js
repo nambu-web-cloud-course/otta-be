@@ -30,6 +30,7 @@ class Comment extends Sequelize.Model {
 				is_picked: {
 					type: Sequelize.TINYINT,
 					allowNull: false,
+					defaultValue: 0,
 				},
 				user_id: {
 					type: Sequelize.INTEGER(10),
