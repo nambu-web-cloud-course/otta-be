@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
 
+const emoji = ['🩳','👚','🥼','🦺','👘','👙','🥻','🧥','🩱','🩲','👕','👖','👔','🎽','👗'] ;
+
 router.post('/sign_in', async (req, res) => {
 	const { email, password } = req.body;
 	const options = {
@@ -22,13 +24,14 @@ router.post('/sign_in', async (req, res) => {
 });
 
 router.post('/sign_up', async (req, res) => {
-	let new_user = req.body;
-	new_user.emoji = 'haha';
+	
+	let new_user = req.body.data;
+	const r = Math.floor (( Math.random() * 15 ));
+	new_user.emoji=emoji[r];
+	console.log('new_user', new_user);
 
 	try {
 		let result = await User.create(new_user);
-
-		result.password = '';
 
 		res.send({ success: true, data: result, message: '회원 가입 성공' });
 	} catch (error) {
