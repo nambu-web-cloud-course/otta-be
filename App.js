@@ -17,6 +17,7 @@ const my_page_post_list_router = require('./routes/my_page/post_list_router.js')
 const my_page_comment_list_router = require('./routes/my_page/comment_list_router.js');
 const nanum_create_post_router = require('./routes/nanum_create_post_router.js');
 const nanum_post_router = require('./routes/nanum_post_router.js');
+const blob_upload_router = require('./routes/blob_upload_router.js');
 
 // middleware
 app.use(morgan('dev'));
@@ -30,6 +31,7 @@ app.use('/my-page/post-list', my_page_post_list_router);
 app.use('/my-page/comment-list', my_page_comment_list_router);
 app.use('/nanum-create-post', nanum_create_post_router);
 app.use('/nanum-post', nanum_post_router);
+app.use('/upload', blob_upload_router);
 
 app.listen(port, () => {
 	console.log('Express server listening on port ' + port);
