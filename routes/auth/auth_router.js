@@ -28,16 +28,16 @@ const emoji = [
 router.post('/sign_in', async (req, res) => {
 	const { email, password } = req.body;
 	const options = {
-		attributes: ['email', 'password'],
+		attributes: ['id', 'password', 'nick_name'],
 		where: [{ email: email }],
 	};
 	const result = await User.findOne(options);
 	if (result) {
 		if (await bcrypt.compare(password, result.password)) {
-			const token = jwt.sign({ email: email, lvl: 3, rol: 'admin' }, secret, { expiresIn: 10000 });
+			const token = jwt.sign({ user_id: result.id }, secret, { expiresIn: 60 * 60 * 24 });
 			res.send({
 				success: true,
-				email: email,
+				nick_name: result.nick_name,
 				token: token,
 				message: '로그인 성공',
 			});
