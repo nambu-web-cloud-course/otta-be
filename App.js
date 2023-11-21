@@ -23,7 +23,7 @@ const blob_upload_router = require('./routes/blob_upload_router.js');
 const nanum_list_comment_router = require('./routes/nanum/nanum_list_comment_router.js');
 const auth_router = require('./routes/auth/auth_router.js');
 
-
+// middleware
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -39,7 +39,6 @@ app.use('/nanum-post', nanum_post_router);
 app.use('/upload', blob_upload_router);
 app.use('/nanum/list/comment', nanum_list_comment_router);
 app.use('/auth', auth_router);
-
 
 app.listen(port, () => {
 	console.log('Express server listening on port ' + port);
