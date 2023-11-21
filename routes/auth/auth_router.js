@@ -25,10 +25,10 @@ const saltRound = 10;
 // 	'👗',
 // ];
 
-router.get('/sign_in', async (req, res) => {
+router.post('/sign_in', async (req, res) => {
 	console.log('start');
 	const { email, password } = req.body;
-
+	console.log(req.body);
 	const options = {
 		attributes: ['email', 'password'],
 		where: [{ email: email }],
@@ -55,18 +55,29 @@ router.get('/sign_in', async (req, res) => {
 router.post('/sign_up', async (req, res) => {
 	const new_user = req.body;
 
-	const hashed = bcrypt.hashSync(new_user.password, saltRound);
-	// console.log(hashed);
-	new_user.password = hashed;
-	new_user.emoji = Math.floor(Math.random() * 15);
-	// console.log('new_user', new_user);
+	let options = {
+		attributes: ['email'],
+		where: [{ email: new_user.email }],
+	};
+	console.log(new_user.email);
+	const result = await User.findOne(options);
+	console.log(result);
+	if (result) {
+		return res.send({ success: false, data: 'email', message: '사용중인 email입니다' });
+	} else {
+		const hashed = await bcrypt.hash(new_user.password, saltRound);
+		console.log(hashed);
+		new_user.password = hashed;
+		new_user.emoji = Math.floor(Math.random() * 15);
+		console.log('new_user', new_user);
 
-	try {
-		const result = await User.create(new_user);
+		try {
+			const result = await User.create(new_user);
 
-		res.send({ success: true, data: result, message: '회원 가입 성공' });
-	} catch (error) {
-		res.send({ success: false, data: new_user, message: error });
+			res.send({ success: true, data: result, message: '회원 가입 성공' });
+		} catch (error) {
+			res.send({ success: false, data: new_user, message: error });
+		}
 	}
 });
 
