@@ -7,28 +7,26 @@ const secret = process.env.JWT_SECRET;
 
 const saltRound = 10;
 
-// const emoji = [
-// 	'🩳',
-// 	'👚',
-// 	'🥼',
-// 	'🦺',
-// 	'👘',
-// 	'👙',
-// 	'🥻',
-// 	'🧥',
-// 	'🩱',
-// 	'🩲',
-// 	'👕',
-// 	'👖',
-// 	'👔',
-// 	'🎽',
-// 	'👗',
-// ];
+const emoji = [
+	'shorts',
+	'blouse',
+	'gown',
+	'safevest',
+	'jumpsuit',
+	'bikini',
+	'onepiece',
+	'jacket',
+	'swimsuit',
+	'briefs',
+	'tshirt',
+	'jeans',
+	'necktie',
+	'sleeveless',
+	'dress',
+];
 
 router.post('/sign_in', async (req, res) => {
-	console.log('start');
 	const { email, password } = req.body;
-	console.log(req.body);
 	const options = {
 		attributes: ['email', 'password'],
 		where: [{ email: email }],
@@ -37,7 +35,6 @@ router.post('/sign_in', async (req, res) => {
 	if (result) {
 		if (await bcrypt.compare(password, result.password)) {
 			const token = jwt.sign({ email: email, lvl: 3, rol: 'admin' }, secret, { expiresIn: 10000 });
-			console.log(`token ===== ${token}`);
 			res.send({
 				success: true,
 				email: email,
@@ -59,17 +56,13 @@ router.post('/sign_up', async (req, res) => {
 		attributes: ['email'],
 		where: [{ email: new_user.email }],
 	};
-	console.log(new_user.email);
 	const result = await User.findOne(options);
-	console.log(result);
 	if (result) {
 		return res.send({ success: false, data: 'email', message: '사용중인 email입니다' });
 	} else {
 		const hashed = await bcrypt.hash(new_user.password, saltRound);
-		console.log(hashed);
 		new_user.password = hashed;
-		new_user.emoji = Math.floor(Math.random() * 15);
-		console.log('new_user', new_user);
+		new_user.emoji = emoji[Math.floor(Math.random() * 15)];
 
 		try {
 			const result = await User.create(new_user);
