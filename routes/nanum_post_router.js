@@ -3,12 +3,14 @@ const router = express.Router();
 const { Post, PostImage, User } = require('../models');
 
 router.get('/detail', (req, res) => {
+	//TODO: authorization
+	req.user_id = 1;
 	const { post_id } = req.query;
 
 	let response = {};
 
 	const post_options = {
-		attributes: ['title', 'content', 'status', 'user_id'],
+		attributes: ['title', 'content', 'status', 'user_id', 'createdAt'],
 		where: { id: post_id },
 	};
 	const post_image_options = { attributes: ['url', 'order'], where: { post_id: post_id } };
@@ -20,8 +22,15 @@ router.get('/detail', (req, res) => {
 
 	Post.findOne(post_options)
 		.then(data => {
-			const { title, content, status, user_id } = data;
-			response = { ...response, title, content, status };
+			const { title, content, status, user_id, createdAt } = data;
+			response = {
+				...response,
+				title,
+				content,
+				status,
+				createdAt,
+				is_my_post: req.user_id === user_id,
+			};
 			return User.findOne(user_options(user_id));
 		})
 		.then(data => {
