@@ -13,16 +13,16 @@ const getBlobName = (req, file) => {
 
 const azureStorage = new MulterAzureStorage({
 	connectionString: process.env.AZURE_CONNECTION_STRING,
-	accessKey: process.env.AZURE_ACCESS_KEY,
-	accountName: process.env.AZURE_ACCOUNT_NAME,
 	containerName: 'nanum-post-images',
 	blobName: getBlobName,
+	containerAccessLevel: 'blob',
+	urlExpirationTime: -1,
 });
 
 const upload = multer({ storage: azureStorage });
 
 router.post('/images', upload.array('files'), (req, res) => {
-	const result = req.files.map(ele => ele.url);
+	const result = req.files.map(ele => process.env.AZURE_BLOB_BASE_URL + ele.blobName);
 	res.status(200).send({ success: true, data: result });
 });
 
