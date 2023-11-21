@@ -58,8 +58,8 @@ class Comment extends Sequelize.Model {
 		);
 	}
 	static associate(db) {
-		db.Comment.belongsTo(db.Post, { foreignKey: 'post_id' });
-		db.Comment.belongsTo(db.User, { foreignKey: 'user_id' });
+		db.Comment.belongsTo(db.Post, { foreignKey: 'post_id', targetKey: 'id' });
+		db.Comment.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id' });
 		db.Comment.hasOne(db.Alert);
 	}
 }
