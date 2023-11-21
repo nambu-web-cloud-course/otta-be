@@ -8,7 +8,7 @@ dotenv.config();
 
 const getBlobName = (req, file) => {
 	const ext = path.extname(file.originalname);
-	return path.basename(file.originalname, ext);
+	return path.basename(file.originalname, ext) + Date.now() + ext;
 };
 
 const azureStorage = new MulterAzureStorage({
