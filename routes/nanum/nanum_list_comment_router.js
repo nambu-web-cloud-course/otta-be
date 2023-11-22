@@ -1,9 +1,8 @@
 const express = require('express');
 const { Comment } = require('../../models');
 const router = express.Router();
-const isAuth = require('../auth/authorization.js');
 
-router.post('/', isAuth, async (req, res) => {
+router.post('/', async (req, res) => {
 	const new_comment = req.body;
 	console.log('req.body', req.body);
 	try {
