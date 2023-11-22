@@ -1,12 +1,11 @@
 const express = require('express');
 const Post = require('../models/Post');
 const PostImage = require('../models/PostImage');
+const isAuth = require('./auth/authorization');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
+router.post('/', isAuth, async (req, res) => {
 	const new_post = req.body;
 	try {
 		new_post.user_id = req.user_id;
@@ -20,9 +19,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-router.post('/image', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
+router.post('/image', isAuth, async (req, res) => {
 	const { post_id, image_url_list } = req.body;
 
 	try {
@@ -32,6 +29,17 @@ router.post('/image', async (req, res) => {
 		});
 
 		res.status(201).send({ success: true, data: '', message: '이미지 업로드 성공' });
+	} catch (err) {
+		res.status(500).send({ success: false, data: '', message: err.message });
+	}
+});
+
+router.delete('/', isAuth, async (req, res) => {
+	const { post_id } = req.body;
+	const options = { where: { id: post_id } };
+	try {
+		const result = await Post.destroy(options);
+		res.status(200).send({ success: true, data: result, message: '포스트 작성 취소 성공' });
 	} catch (err) {
 		res.status(500).send({ success: false, data: '', message: err.message });
 	}
