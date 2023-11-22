@@ -4,7 +4,6 @@ const { User } = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET;
-
 const saltRound = 10;
 
 const emoji = [
@@ -58,7 +57,7 @@ router.post('/sign_up', async (req, res) => {
 	};
 	const result = await User.findOne(options);
 	if (result) {
-		return res.send({ success: false, data: 'email', message: '사용중인 email입니다' });
+		return res.send({ success: false, data: result, message: '사용중인 email입니다' });
 	} else {
 		const hashed = await bcrypt.hash(new_user.password, saltRound);
 		new_user.password = hashed;
@@ -69,7 +68,7 @@ router.post('/sign_up', async (req, res) => {
 
 			res.send({ success: true, data: result, message: '회원 가입 성공' });
 		} catch (error) {
-			res.send({ success: false, data: new_user, message: error });
+			res.send({ success: false, data: new_user, message: '회원 가입에 실패하였습니다' });
 		}
 	}
 });
