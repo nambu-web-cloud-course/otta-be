@@ -5,7 +5,6 @@ const isAuth = require('../auth/authorization.js');
 
 router.post('/', isAuth, async (req, res) => {
 	const new_comment = req.body;
-	console.log('req.body', req.body);
 	try {
 		const result = await Comment.create(new_comment);
 

@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { Post, Comment } = require('../../models');
 const User = require('../../models/User');
+const isAuth = require('../auth/authorization');
 
-router.get('/', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
-
+router.get('/', isAuth, async (req, res) => {
 	let result = [];
 
 	try {

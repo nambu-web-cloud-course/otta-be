@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
+const isAuth = require('../auth/authorization');
 
 const mock_response = {
 	email: 'tony@email.com',
@@ -11,13 +12,10 @@ const mock_response = {
 	detail_addr: '본관 1층',
 };
 
-router.get('/user-info', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
-
+router.get('/user-info', isAuth, async (req, res) => {
 	try {
 		const options = {
-			attributes: ['email', 'nick_name', 'phone', 'addr', 'addr_detail'],
+			attributes: ['id', 'email', 'nick_name', 'phone', 'addr', 'addr_detail', 'emoji'],
 			where: { id: req.user_id },
 		};
 
@@ -32,7 +30,7 @@ router.get('/user-info', async (req, res) => {
 		}
 		return res.status(200).send({
 			success: true,
-			data: mock_response && result,
+			data: result,
 			message: '조회 성공',
 		});
 	} catch (err) {
@@ -40,9 +38,7 @@ router.get('/user-info', async (req, res) => {
 	}
 });
 
-router.put('/user-info', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
+router.put('/user-info', isAuth, async (req, res) => {
 	try {
 		const options = { where: { id: req.user_id } };
 

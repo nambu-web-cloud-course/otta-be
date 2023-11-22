@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { Post, Comment, User } = require('../../models');
+const isAuth = require('../auth/authorization');
 
-router.get('/', async (req, res) => {
-	//TODO: authorization
-	req.user_id = '1';
+router.get('/', isAuth, async (req, res) => {
 	try {
 		const options = {
 			attributes: ['id', 'title'],
@@ -30,10 +29,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/comment-list', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
-
+router.get('/comment-list', isAuth, async (req, res) => {
 	const { post_id } = req.query;
 
 	let user_options = { attributes: ['nick_name'] };
@@ -85,13 +81,8 @@ router.get('/comment-list', async (req, res) => {
 	res.status(200).send({ success: true, data: result_with_nick_name, message: '조회 성공' });
 });
 
-router.put('/check', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
-
+router.put('/check', isAuth, async (req, res) => {
 	const { comment_id, post_id } = req.query;
-	console.log('post_id: ', post_id);
-	console.log('comment_id: ', comment_id);
 
 	const post_options = { where: { id: post_id } };
 	const options = { where: { id: comment_id } };
