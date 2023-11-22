@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { Post, PostImage, User } = require('../models');
+const isAuth = require('./auth/authorization');
 
-router.get('/detail', (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
+router.get('/detail', isAuth, (req, res) => {
 	const { post_id } = req.query;
 
 	let response = {};
@@ -42,10 +41,7 @@ router.get('/detail', (req, res) => {
 		});
 });
 
-router.get('/list', async (req, res) => {
-	//TODO: authorization
-	req.user_id = 1;
-
+router.get('/list', isAuth, async (req, res) => {
 	const options = { attributes: ['id', 'title', 'content', 'status', 'user_id', 'createdAt'] };
 	const post_image_options = post_id => {
 		return { attributes: ['url'], where: { post_id: post_id, order: 1 } };
@@ -59,9 +55,9 @@ router.get('/list', async (req, res) => {
 			return await Promise.all(
 				data.map(async ele => {
 					const { id, title, content, status, user_id, createdAt } = ele;
-					console.log('id: ', id);
-					const { url } = await PostImage.findOne(post_image_options(id));
+					const post_image_result = await PostImage.findOne(post_image_options(id));
 					const { nick_name } = await User.findOne(user_options(user_id));
+
 					return {
 						id,
 						title,
@@ -69,7 +65,7 @@ router.get('/list', async (req, res) => {
 						status,
 						nick_name,
 						createdAt,
-						thumbnail_url: url,
+						thumbnail_url: post_image_result ? post_image_result.url : '',
 						is_my_post: req.user_id === user_id,
 					};
 				}),
