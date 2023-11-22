@@ -12,11 +12,8 @@ const isAuth = async (req, res, next) => {
 		if (error) {
 			return res.send({ message: 'Auth error' });
 		} else {
-			const email = decoded.email;
-			const role = decoded.rol;
-			req.email = email;
-			req.role = role;
-			console.log('req', req);
+			const user_id = decoded.user_id;
+			req.user_id = user_id;
 			next();
 		}
 	});
